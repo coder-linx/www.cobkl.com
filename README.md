@@ -9,7 +9,9 @@
 `所有数据及代码已经过脱敏处理，不包含用户隐私及相关密码`
 
 code 为所有程序文件
+
 code/db/DBConfig.js 为数据库配置文件
+
 code/package.json 项目依赖包及运行脚本
 
 db 为数据库文件

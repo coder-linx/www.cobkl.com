@@ -1,0 +1,168 @@
+{{extend '../common/layout.art'}} {{block 'title'}}吐槽详情{{/block}} {{block 'head'}}
+<link href="{{link.static}}/admin/css/form.css" rel="stylesheet"> {{/block}} {{block 'content'}}
+<div class="form-wrapper">
+	<div class="crumb">
+		<a href="javascript:;" class="back" title="返回">
+			<svg class="icon ico" aria-hidden="true">
+				<use xlink:href="#icon-back"></use>
+			</svg>
+		</a>
+		<a href="#" class="layer">最新吐槽</a>
+		<i class="space">／</i>
+		<a href="#" class="layer on">吐槽详情</a>
+	</div>
+	<div class="form-horizontal add-art-form container">
+		<div class="form-group">
+			<label class="col-sm-2 control-label">ID：</label>
+			<div class="controls col-sm-10">
+				<div class="show-text">{{details.id}}</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">公司名字：</label>
+			<div class="controls col-sm-10">
+				<div class="show-text">{{details.name}}</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">公司地址：</label>
+			<div class="controls col-sm-10">
+				<div class="show-text">{{details.address}}</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">吐槽人：</label>
+			<div class="controls col-sm-10">
+				<div class="show-text">{{details.author || '用户'}}</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">吐槽人职位：</label>
+			<div class="controls col-sm-10">
+				<div class="show-text">{{details.job}}</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">吐槽人联系方式：</label>
+			<div class="controls col-sm-10">
+				<div class="show-text">{{details.contact}}</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">吐槽人ip：</label>
+			<div class="controls col-sm-10">
+				<div class="show-text">{{details.ip}}</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">吐槽人ip地址：</label>
+			<div class="controls col-sm-10">
+				<div class="show-text">{{details.ipAddress}}</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">吐槽原因：</label>
+			<div class="controls col-sm-10">
+				<div class="show-text">{{details.reason}}</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">详细信息：</label>
+			<div class="controls col-sm-10">
+				<div class="show-text">{{@details.content}}</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">吐槽时间：</label>
+			<div class="controls col-sm-10">
+				<div class="show-text">{{details.createtime | timestamp | dateFormat 'yyyy-MM-dd hh:mm:ss'}}</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">点赞次数：</label>
+			<div class="controls col-sm-10">
+				<div class="show-text">{{details.agree}}</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">反对次数：</label>
+			<div class="controls col-sm-10">
+				<div class="show-text">{{details.oppose}}</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">查看评论：</label>
+			<div class="controls col-sm-10">
+				<a href="javascript:;" class="comment-btn">查看评论</a>
+			</div>
+		</div>
+		<div class="form-group" id="js_operation">
+			<div class="controls col-sm-10 col-sm-offset-2">
+				<a href="{{link.admin.index}}{{link.admin.company.index}}{{link.admin.company.edit}}/{{details.id}}" class="form-btn btn">修改</a>
+				<a href="javascript:;" class="form-btn btn cancel js_btn" data-type="recovery" data-id="{{details.id}}" data-url="{{link.admin.index}}{{link.admin.company.index}}{{link.admin.company.recovery}}">恢复</a>
+				<a href="javascript:;" class="form-btn btn cancel js_btn" data-type="delete" data-id="{{details.id}}" data-url="{{link.admin.index}}{{link.admin.company.index}}{{link.admin.company.delete}}">删除</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+{{/block}} {{block 'script'}}
+<script type="text/javascript">
+	var isDelete = {};
+	Object.defineProperty(isDelete, 'value', {
+		set: function(newValue) {
+			if (newValue == 1) {
+				$('#js_operation .js_btn[data-type="delete"]').hide();
+				$('#js_operation .js_btn[data-type="recovery"]').show();
+			}
+			if (newValue == 0) {
+				$('#js_operation .js_btn[data-type="recovery"]').hide();
+				$('#js_operation .js_btn[data-type="delete"]').show();
+			}
+			return newValue;
+		}
+	});
+	isDelete.value = '{{details.isdelete}}';
+	$('#js_operation').on('click', '.js_btn', function () {
+		var api = $(this).data('url');
+		var id = $(this).data('id');
+		var text = $(this).text();
+		var type = $(this).data('type');
+		var flag = window.confirm('是否确认' + text + '?');
+		if (!flag) {
+			return;
+		}
+		common.loading('show');
+		$.ajax({
+			url: api,
+			type: 'POST',
+			dataType: 'JSON',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			data: JSON.stringify({
+				id: id
+			})
+		}).done(function (data) {
+			if (data.code === '100') {
+				// delete表示删除成功，recovery表示恢复成功
+				if (type === 'recovery') {
+					isDelete.value = 0;
+				} else if (type === 'delete') {
+					isDelete.value = 1;
+				}
+				common.toast('操作成功');
+			} else {
+				common.toast(data.desc);
+			}
+		}).fail(function (error) {
+			if (error.readyState === 0) {
+				return;
+			}
+			common.toast('接口请求失败: ' + (error.status || -1));
+		}).always(function () {
+			common.loading('hide');
+		});
+	});
+</script>
+{{/block}}

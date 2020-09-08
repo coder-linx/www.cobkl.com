@@ -1,0 +1,77 @@
+{{extend '../common/layout.art'}}
+
+{{block 'title'}}最新吐槽{{/block}}
+
+{{block 'head'}}
+<link href="{{link.static}}/admin/css/table.css" rel="stylesheet">
+{{/block}}
+
+{{block 'content'}}
+<div class="table-wrapper">
+	<!-- <div class="crumb"><a href="javascript:;" class="back" title="返回"><img class="ico" src="./images/map/icon-1.svg"/></a><a href="#" class="layer">通知通告</a><i class="space">／</i><a href="#" class="layer on">通告列表</a></div> -->
+	<form class="search-form">
+			<input type="text" class="input-title" placeholder="请输入标题">
+			<select class="select-type">
+				<option>请选择类型</option>
+				<option>1</option>
+				<option>2</option>
+			</select>
+			<div class="state">状态： <label><input type="radio" name="state">草稿</label><label><input type="radio" name="state">发布</label></div>
+			<button type="submit" class="search-btn">查询</button>
+		</form>
+		<div class="table-container">
+			<table class="table">
+				<tr>
+					<th>公司名字</th>
+					<th>公司地址</th>
+					<th>职位</th>
+					<th>吐槽原因</th>
+					<th>时间</th>
+					<th>操作</th>
+				</tr>
+				{{each list item index}}
+				<tr class="{{item.isread ? '' : 'noread'}}{{item.isdelete ? ' del' : ''}}">
+					<td><div class="item-name">{{item.name}}</div></td>
+					<td>{{item.address}}</td>
+					<td>{{item.job}}</td>
+					<td>{{item.reason}}</td>
+					<td>{{item.createtime | timestamp | dateFormat 'yyyy-MM-dd hh:mm:ss'}}</td>
+					<td class="operate">
+						<a href="{{link.admin.index}}{{link.admin.company.index}}{{link.admin.company.details}}/{{item.id}}" class="link">查看</a>
+						<a href="{{link.admin.index}}{{link.admin.company.index}}{{link.admin.company.edit}}/{{item.id}}" class="link">编辑</a>
+						{{if !item.isread}}
+						<a href="#" class="link">已读</a>
+						{{/if}}
+						{{if item.isdelete}}
+						<a href="#" class="link">恢复</a>
+						{{else}}
+						<a href="#" class="link">删除</a>
+						{{/if}}
+					</td>
+				</tr>
+				{{/each}}
+			</table>
+		</div>
+		<div class="table-pager">
+			<nav class="paging" aria-label="Page navigation">
+				<ul class="pagination">
+					{{@total | pagination pageNo pageSize link.admin.index + link.admin.company.index}}
+					<li class="num">
+						<select>
+							<option>10/页</option>
+							<option>20/页</option>
+							<option>30/页</option>
+							<option>40/页</option>
+						</select>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	
+</div>
+{{/block}}
+
+{{block 'script'}}
+<script type="text/javascript">
+</script>
+{{/block}}

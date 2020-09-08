@@ -1,0 +1,89 @@
+<!--baoliao.art-->
+{{extend '../common/layout.art'}}
+
+{{block 'title'}}{{details.name}}怎么样？_黑榜_企业黑名单网站{{/block}}
+{{block 'keywords'}}{{details.name}}怎么样？,{{details.name}}好不好？,{{details.name}}行不行？,{{details.name}}有问题没？{{/block}}
+{{block 'description'}}{{details.reason}}{{/block}}
+
+{{block 'head'}}
+  <link rel="stylesheet" href="{{link.static}}/editor/wangEditor.min.css">
+  <link rel="stylesheet" href="{{link.static}}/css/details.css">
+{{/block}}
+
+
+{{block 'content'}}
+  <section>
+    <h1 class="title">{{details.name}}</h1>
+    <div class="info"><h2 class="info-name">发布时间：</h2>{{details.createtime | dateFormatBeforeN}}</div>
+    <div class="info"><h2 class="info-name">吐槽原因：</h2>{{details.reason}}</div>
+    <div class="info"><h2 class="info-name">公司坐标：</h2>{{details.address}}</div>
+  {{if details.job}}
+    <div class="info"><h2 class="info-name">吐槽人职位：</h2>{{details.job}}</div>
+  {{/if}}
+  {{if $imports.filterHTMLTag(details.content)}}
+    <div class="info details">{{@details.content}}</div>
+  {{else}}
+    <div class="info details"><p class="text-warning">楼主很懒，什么都没留下...</p></div>
+  {{/if}}
+  {{if details.author == 'admin'}}
+    <!-- <div class="notice">注意：信息源于网络，由黑榜收集整理，请谨慎对待！如有侵权，请联系我们删除！</div> -->
+    <div class="notice">注意：信息源于网络，由黑榜收集整理，请谨慎对待！</div>
+  {{else}}
+    <div class="notice">注意：吐槽人的一人之言，请理性看待！！</div>
+  {{/if}}
+  </section>
+  <section>
+    <div class="art-like" id="js_details_like" data-id="{{details.id}}" data-url="{{link.host}}{{link.details.index}}{{link.details.like}}">
+      <a href="javascript:;" class="js_btn" data-type="1"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>(<i>{{details.agree}}</i>)</a>
+      <a href="javascript:;" class="js_btn" data-type="0"><span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>(<i>{{details.oppose}}</i>)</a>
+    </div>
+  </section>
+  <section class="comment">
+    <form id="js_submit_comment" class="form-comment" data-url="{{link.host}}{{link.details.index}}{{link.details.comment}}" data-id="{{details.id}}">
+      <div class="form-group">
+        <label>抬杠一句（共 <span id="js_total_comment">{{commentTotal}}</span> 条）</label>
+        <div id="editor"></div>
+      </div>
+    {{if enabledCaptcha}}
+      <div class="form-group form-group-captcha">
+        <label for="js_captcha_input" class="control-label">验证码：</label>
+        <input type="text" class="form-control" id="js_captcha_input" name="captcha" placeholder="请输入验证码" maxlength="8" autocomplete="off">
+        <div class="captcha" id="js_captcha" data-captcha-url="{{link.host}}{{link.details.index}}{{link.details.captcha}}">
+          <a href="javascript:;" class="js_captcha_change"><img src="{{link.host}}{{link.details.index}}{{link.details.captcha}}" alt="验证码"></a>
+          <a href="javascript:;" class="captcha-change js_captcha_change">换一张</a>
+        </div>
+      </div>
+    {{/if}}
+      <button type="submit" class="btn btn-default">抬杠</button>
+    </form>
+    <ul
+      class="user-comment list-unstyled{{if comment.length === 0}} empty{{/if}}"
+      id="js_comment_list"
+      data-like-url="{{link.host}}{{link.details.index}}{{link.details.commentLike}}"
+    >
+      {{each comment item index}}
+      <li class="item">
+        <div class="head">
+          <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+        </div>
+        <address class="comment-address">来自 {{item.city}} 网友 <span class="floor">{{commentTotal - (startIndex + index + 1) | floorFormat}}</span></address>
+        <div class="comment-time">{{item.createtime | dateFormatBeforeN}}</div>
+        <div class="comment-content">{{@item.content}}</div>
+        <div class="like" data-id="{{item.id}}">
+          <a href="javascript:;" class="js_btn" data-type="1"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>(<i>{{item.agree}}</i>)</a>
+          <a href="javascript:;" class="js_btn" data-type="0"><span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>(<i>{{item.oppose}}</i>)</a>
+        </div>
+      </li>
+      {{/each}}
+    </ul>
+    {{if commentPageNo < commentPageTotal}}
+    <div class="more"><a href="{{link.host}}{{link.details.index}}/{{details.uuid}}/{{commentPageNo + 1}}" data-more-url="{{link.host}}{{link.details.index}}/{{details.uuid}}/" data-page-no="{{commentPageNo + 1}}" data-total="{{commentPageTotal}}" id="js_get_more_comment">加载更多<span class="glyphicon glyphicon-chevron-down"></span></a></div>
+    {{/if}}
+  </section>
+{{/block}}
+
+
+{{block 'script'}}
+  <script src="{{link.static}}/editor/wangEditor.min.js"></script>
+  <script src="{{link.static}}/js/details.js"></script>
+{{/block}}

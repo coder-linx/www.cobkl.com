@@ -1,0 +1,54 @@
+<!--baoliao.art-->
+{{extend '../common/layout.art'}}
+
+{{block 'title'}}意见建议_黑榜_企业黑名单网站{{/block}}
+
+{{block 'head'}}
+  <link rel="stylesheet" href="{{link.static}}/editor/wangEditor.min.css">
+  <link rel="stylesheet" href="{{link.static}}/css/advice.css">
+{{/block}}
+
+
+{{block 'content'}}
+<form class="form-horizontal" id="js_advice_form" data-url="{{link.host}}{{link.advice.index}}">
+  <h1>
+    <legend class="title">填写意见建议</legend>
+  </h1>
+  <div class="form-group">
+    <label for="inputPassword3" class="col-sm-2 control-label">意见建议：</label>
+    <div class="col-sm-10">
+      <div id="editor"></div>
+      <span class="help-block">请在此吐槽该网站bug，和对该网站的意见及建议！</span>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="js_contact" class="col-sm-2 control-label">联系方式：</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="js_contact" placeholder="QQ/微信/email/电话号码" autocomplete="off">
+      <span class="help-block">方便进一步沟通，选填</span>
+    </div>
+  </div>
+  {{if enabledCaptcha}}
+  <div class="form-group form-group-captcha">
+    <label for="js_captcha_input" class="col-sm-2 control-label">验证码：</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="js_captcha_input" name="captcha" placeholder="请输入验证码" maxlength="8" autocomplete="off">
+      <div class="captcha" id="js_captcha" data-captcha-url="{{link.host}}{{link.advice.index}}{{link.advice.captcha}}">
+        <a href="javascript:;" class="js_captcha_change"><img src="{{link.host}}{{link.advice.index}}{{link.advice.captcha}}" alt="验证码"></a>
+        <a href="javascript:;" class="captcha-change js_captcha_change">换一张</a>
+      </div>
+    </div>
+  </div>
+{{/if}}
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-default">保存</button>
+    </div>
+  </div>
+</form>
+{{/block}}
+
+{{block 'script'}}
+  <script src="{{link.static}}/editor/wangEditor.min.js"></script>
+  <script src="{{link.static}}/js/advice.js"></script>
+{{/block}}

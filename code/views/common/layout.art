@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="renderer" content="webkit">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+  <title>{{block 'title'}}黑榜_企业黑名单网站{{/block}}</title>
+  <meta name="keywords" content="{{block 'keywords'}}黑榜,黑榜网,企业黑名单,公司黑名单,IT黑名单,吐槽企业,企业吐槽,骗子公司{{/block}}" />
+  <meta name="description" content="{{block 'description'}}黑榜网，做企业黑名单，造求职通讯录。前人爆料，后人弃坑，黑榜网做你求职路上的一盏明灯。{{/block}}" />
+  <link rel="stylesheet" href="{{link.CDN.bootstrap.css}}">
+  <link rel="stylesheet" href="{{link.static}}/css/reset.css">
+  <link rel="stylesheet" href="{{link.static}}/css/main.css">
+  {{block 'head'}}{{/block}}
+</head>
+<body>
+  {{include './header.art'}}
+
+  <div class="container">
+    {{block 'content'}}{{/block}}
+  </div>
+
+  {{include './footer.art'}}
+
+  <script>
+    var _IE = (function () {
+      var v = 3;
+      var div = document.createElement('div');
+      var all = div.getElementsByTagName('i');
+      while (
+        div.innerHTML = '<!--[if gt IE ' + (++v) + ']><i></i><![endif]-->',
+        all[0]
+      );
+      return v > 4 ? v : false;
+    }());
+    if (_IE) {
+      document.getElementsByTagName('body')[0].innerHTML=('<div class="ie-browser">当前浏览器太古老了，换个浏览器访问本站吧，推荐使用 <a href="https://www.google.cn/chrome/" target="_blank">Google Chrome</a>。<br>或使用手机访问本站！</div>');
+      document.getElementsByTagName('html')[0].className='ie-browser-html';
+    }
+  </script>
+  {{include './tongji.art'}}
+  {{include './tuisong.art'}}
+  <script src="{{link.CDN.jquery.js}}"></script>
+  <script src="{{link.CDN.bootstrap.js}}"></script>
+  <script src="{{link.static}}/js/common.js"></script>
+  {{block 'script'}}{{/block}}
+</body>
+</html>

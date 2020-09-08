@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+<link href="{{link.static}}/css/reset.css" rel="stylesheet">
+<link href="{{link.static}}/css/main.css" rel="stylesheet">
+<link href="{{link.static}}/admin/css/login.css" rel="stylesheet">
+<title>登录</title>
+</head>
+<body>
+
+<div class="wrapper">
+	<div class="content">
+		<form class="login-form" id="js_login_form" data-url="{{link.host}}{{link.admin.index}}{{link.admin.login.index}}" data-callback-url="{{link.host}}{{link.admin.index}}{{link.admin.home.index}}">
+			<h3 class="name">管理系统登录</h3>
+			<div class="input-item">
+				<img src="{{link.static}}/admin/images/login/login_ico_user@2x.png" alt="" class="ico">
+				<input type="text" class="input" placeholder="用户名" id="js_user_input">
+			</div>
+			<div class="input-item">
+				<img src="{{link.static}}/admin/images/login/login_ico_pass@2x.png" alt="" class="ico">
+				<input type="password" class="input" placeholder="密码" id="js_password_input">
+			</div>
+			
+			<div class="input-item captcha{{if enabledCaptcha}} on{{/if}}" id="js_captcha_container" data-enabled-captcha="{{enabledCaptcha}}">
+				<img src="{{link.static}}/admin/images/login/login_ico_code@2x.png" alt="" class="ico">
+				<input type="text" class="input" placeholder="验证码" id="js_captcha_input">
+				<a href="javascript:;" class="captcha-link" id="js_captcha" data-captcha-url="{{link.host}}{{link.admin.index}}{{link.admin.login.index}}{{link.admin.login.captcha}}"><img class="captcha-img js_captcha_change"></a>
+			</div>
+			<input type="submit" value="登录" class="login-btn">
+		</form>
+	</div>
+</div>
+
+<!-- 引入前台页面统计代码 -->
+{{include '../../../views/common/tongji.art'}}
+<script src="{{link.CDN.jquery.js}}"></script>
+<script src="{{link.static}}/js/common.js"></script>
+<script src="{{link.static}}/admin/js/login.js"></script>
+</body>
+</html>

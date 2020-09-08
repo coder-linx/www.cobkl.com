@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+<title>{{block 'title'}}黑榜网管理平台{{/block}}</title>
+<!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap.min.css" rel="stylesheet"> -->
+<!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap-responsive.min.css" rel="stylesheet"> -->
+<link href="{{link.CDN.bootstrap.css}}" rel="stylesheet">
+<link href="{{link.static}}/css/main.css" rel="stylesheet">
+<link href="{{link.static}}/admin/css/layout.css" rel="stylesheet">
+{{block 'head'}}{{/block}}
+</head>
+<body>
+	<div class="wrapper">
+		<section class="wrapper-top">
+			<a href="{{link.admin.index}}{{link.admin.home.index}}" class="logo">管理平台</a>
+			<div class="right">
+				<a href="#" class="link" title="消息">
+					<i class="new"></i>
+					<svg class="icon ico" aria-hidden="true">
+						<use xlink:href="#icon-message"></use>
+					</svg>
+				</a>
+				<a href="javascript:;" class="link" title="设置" id="js_setting_btn">
+					<svg class="icon ico" aria-hidden="true">
+						<use xlink:href="#icon-setting"></use>
+					</svg>
+				</a>
+			</div>
+			<ul class="user-info" id="js_setting_container">
+				<li class="head">
+					<a href="#">
+						<svg class="icon head-img" aria-hidden="true">
+							<use xlink:href="#icon-user"></use>
+						</svg>
+					</a>
+					<div class="name">管理员</div>
+					<div class="tel">13980888577</div>
+				</li>
+				<li class="item">
+					<a href="#" class="link">
+						<svg class="icon ico" aria-hidden="true">
+								<use xlink:href="#icon-change-password"></use>
+						</svg> 修改密码
+					</a>
+				</li>
+				<li class="item">
+					<a href="#" class="link">
+						<svg class="icon ico" aria-hidden="true">
+								<use xlink:href="#icon-logout"></use>
+						</svg> 退出登录
+					</a>
+				</li>
+			</ul>
+		</section>
+		<nav class="nav">
+			<div class="head">
+				<a href="#">
+					<svg class="icon head-img" aria-hidden="true">
+						<use xlink:href="#icon-user"></use>
+					</svg>
+				<div class="name">admin</div>
+			</div>
+			<ul class="link-list list-unstyled">
+				{{set nav = [{
+						activeIndex: 0,
+						name: '首页',
+						link: link.admin.index + link.admin.home.index,
+						ico: '#icon-home'
+					}, {
+						activeIndex: 1,
+						name: '最新吐槽',
+						link: link.admin.index + link.admin.company.index,
+						ico: '#icon-baoliao'
+					}, {
+						activeIndex: 4,
+						name: '添加吐槽',
+						link: link.admin.index + link.admin.company.index + link.admin.company.add,
+						ico: '#icon-add'
+					}, {
+						activeIndex: 2,
+						name: '最新评论',
+						link: '#',
+						ico: '#icon-comment'
+					}, 'space', {
+						activeIndex: 3,
+						name: '意见建议',
+						link: '#',
+						ico: '#icon-advice'
+					}]
+				}}
+				{{each nav item index}}
+					{{if item === 'space'}}
+						<li class="space"></li>
+					{{else}}
+						<li class="item" data-p="{{originalUrl}}">
+							<a href="{{item.link}}" class="link{{if item.activeIndex === active}} on{{/if}}" title="{{item.name}}">
+								<svg class="icon ico" aria-hidden="true">
+									<use xlink:href="{{item.ico}}"></use>
+								</svg> {{item.name}}
+							</a>
+						</li>
+					{{/if}}
+				{{/each}}
+				<!-- <li class="item">
+					<a href="#" class="link on" title="最新吐槽">
+						<svg class="icon ico" aria-hidden="true">
+							<use xlink:href="#icon-baoliao"></use>
+						</svg> 最新吐槽
+					</a>
+					<ul class="child-nav">
+						<li class="child-item"><a href="#" class="on">同心</a></li>
+						<li class="child-item"><a href="#">方针</a></li>
+						<li class="child-item"><a href="#">统战知识</a></li>
+						<li class="child-item"><a href="#">权威解读</a></li>
+						<li class="child-item"><a href="#">政策库</a></li>
+					</ul>
+				</li>
+				<li class="space"></li> -->
+			</ul>
+		</nav>
+		<section class="content">
+			{{block 'content'}}{{/block}}
+		</section>
+	</div>
+	<div class="footer">
+		<p>© 2018 cobkl 蜀ICP证030173号</p>
+	</div>
+
+	<script src="{{link.CDN.iconfont.js}}"></script>
+	<script src="{{link.CDN.jquery.js}}"></script>
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script> -->
+	<script src="{{link.CDN.bootstrap.js}}"></script>
+	<script src="{{link.static}}/js/common.js"></script>
+	<script>
+	// 点击设置按钮显示浮层
+	$('#js_setting_btn').on('click', function() {
+		$('#js_setting_container').toggleClass('on');
+	});
+	// 点及其他地方隐藏浮层
+	$(document).on('click', function(e) {
+		if ($(e.target).closest('#js_setting_btn').length > 0) {
+			return;
+		}
+		if ($(e.target).closest('#js_setting_container').length > 0) {
+			return;
+		}
+		$('#js_setting_container').removeClass('on');
+	});
+	$('.js_back_btn').on('click', function() {
+		window.history.back();
+	});
+	</script>
+	{{block 'script'}}{{/block}}
+</body>
+</html>

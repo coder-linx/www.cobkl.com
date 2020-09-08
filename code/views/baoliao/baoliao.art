@@ -1,0 +1,93 @@
+<!--baoliao.art-->
+{{extend '../common/layout.art'}}
+
+{{block 'title'}}我要吐槽_黑榜_企业黑名单网站{{/block}}
+{{block 'description'}}在这里吐槽你的不开心吧，我们将你踩过的坑呈献给求职人。你的吐槽爆料，让求职路上多一点光亮！{{/block}}
+
+{{block 'head'}}
+  <link rel="stylesheet" href="{{link.static}}/editor/wangEditor.min.css">
+  <link href="{{link.CDN.bootstrapSelect.css}}" rel="stylesheet">
+  <link rel="stylesheet" href="{{link.static}}/css/baoliao.css">
+{{/block}}
+
+
+{{block 'content'}}
+<form class="form-horizontal" id="js_baoliao_form" data-url="{{link.host}}{{link.baoliao.index}}">
+  <h1>
+    <legend class="title">填写吐槽</legend>
+  </h1>
+  <div class="form-group">
+    <label class="col-sm-2 control-label"><span class="required"> * </span>公司坐标：</label>
+    <div class="col-sm-10">
+      <select class="form-control" id="js_city_select" name="city" data-live-search="true" style="visibility: hidden;">
+        <option value="北京市">北京市</option>
+        <option value="上海市">上海市</option>
+        <option value="广州市">广州市</option>
+        <option value="深圳市">深圳市</option>
+        <option value="成都市">成都市</option>
+        <option value="武汉市">武汉市</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="js_name" class="col-sm-2 control-label"><span class="required"> * </span>公司名字：</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="js_name" name="name" placeholder="请输入公司全名" maxlength="255" autocomplete="off" value="{{name}}">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="js_job" class="col-sm-2 control-label">你的职位：</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="js_job" name="job" placeholder="请输入你在公司的职位，让他人了解更多信息" maxlength="255" autocomplete="off">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="js_contact" class="col-sm-2 control-label">联系方式：</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="js_contact" name="contact" placeholder="请输入你的联系方式" maxlength="60" autocomplete="off">
+      <span class="help-block">如：QQ/微信/email/电话号码，仅用于确认吐槽，不在网站显示</span>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="js_reason" class="col-sm-2 control-label"><span class="required"> * </span>吐槽原因：</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="js_reason" name="reason" placeholder="请输入吐槽原因" maxlength="255" autocomplete="off">
+      <span class="help-block">如：拖欠工资、强制加班、无偿加班、卸磨杀驴、不交社保、无故辞退、推延离职等</span>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">详细说明：</label>
+    <div class="col-sm-10">
+      <div id="js_details_editor" class="editor"></div>
+    </div>
+  </div>
+  {{if enabledCaptcha}}
+  <div class="form-group">
+    <label for="js_captcha_input" class="col-sm-2 control-label">验证码：</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="js_captcha_input" name="captcha" placeholder="请输入验证码" maxlength="8" autocomplete="off">
+      <div class="captcha" id="js_captcha" data-captcha-url="{{link.host}}{{link.baoliao.index}}{{link.baoliao.captcha}}">
+        <a href="javascript:;" class="js_captcha_change"><img src="{{link.host}}{{link.baoliao.index}}{{link.baoliao.captcha}}" alt="验证码"></a>
+        <a href="javascript:;" class="captcha-change js_captcha_change">换一张</a>
+      </div>
+    </div>
+  </div>
+  {{/if}}
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">以上内容仅代表你的个人意见！本站不做任何评价，不为以上内容承担任何法律责任！</div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-primary">保存</button>
+    </div>
+  </div>
+</form>
+{{/block}}
+
+{{block 'script'}}
+  <script src="{{link.static}}/editor/wangEditor.min.js"></script>
+  <script src="{{link.static}}/editor/emotions.js"></script>
+  <script src="{{link.CDN.bootstrapSelect.js}}"></script>
+  <script src="{{link.static}}/js/cityList.js"></script>
+  <script src="{{link.static}}/js/baoliao.js"></script>
+{{/block}}

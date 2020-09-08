@@ -1,0 +1,24 @@
+<!--baoliao.art-->
+{{extend '../common/layout.art'}}
+
+{{block 'title'}}关于黑榜_联系黑榜_黑榜_企业黑名单网站{{/block}}
+
+{{block 'head'}}
+  <link rel="stylesheet" href="{{link.static}}/editor/wangEditor.min.css">
+  <link rel="stylesheet" href="{{link.static}}/css/about.css">
+{{/block}}
+
+
+{{block 'content'}}
+  <h2>关于黑榜</h2>
+  <p>cobkl.com寓意：co = company，bkl = black list，company black list 企业黑名单</p>
+  <!-- 成立于2018年6月22日， -->
+  <p>CoBkL，意为公司黑名单(黑榜)，用于收集公司不良信息，主要用于帮助求职人看清求职公司的不良操作，不必担心入职后的各种不开心。</p>
+  <!-- 备案通过于2018-08-08 -->
+  <!-- 上线于2018-08-09 -->
+  <!-- 上线HTTPS于2018-08-15 -->
+  <!-- <p title="101.81.225.211 - [20/Aug/2018:14:16:38 +0800] "GET /details/10400 HTTP/1.1" 301 185 "https://www.google.com/" Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36 - 0.000 - - -
+  ">2018年8月20日14:16:38 由Google搜索引入的第一个评论用户</p> -->
+  <h2>联系站长</h2>
+  <p>Mail: <a href="mailto:admin@cobkl.com">admin@cobkl.com</a></p>
+{{/block}}

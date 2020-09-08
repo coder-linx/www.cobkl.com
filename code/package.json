@@ -1,0 +1,30 @@
+{
+  "name": "code",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "production": "set NODE_ENV=production&& node ./bin/www",
+    "pm2": "pm2 start processes.config.js --env production"
+  },
+  "dependencies": {
+    "art-template": "^4.12.2",
+    "blueimp-md5": "^2.10.0",
+    "cookie-parser": "~1.4.3",
+    "cookie-session": "^2.0.0-beta.3",
+    "debug": "~2.6.9",
+    "express": "~4.16.0",
+    "express-art-template": "^1.0.1",
+    "express-session": "^1.15.6",
+    "hashids": "^1.2.2",
+    "http-errors": "~1.6.2",
+    "jsonwebtoken": "^8.3.0",
+    "morgan": "~1.9.0",
+    "multer": "^1.4.1",
+    "mysql": "^2.15.0",
+    "request": "^2.87.0",
+    "request-ip": "^2.0.2",
+    "trek-captcha": "^0.4.0",
+    "xss": "^1.0.3"
+  }
+}

@@ -1,0 +1,21 @@
+<!--index.art-->
+{{extend '../common/layout.art'}}
+
+{{block 'head'}}
+    <link rel="stylesheet" href="{{link.static}}/css/index.css">
+{{/block}}
+
+{{block 'content'}}
+  <div class="wrapper">
+    <p class="text-center info">在职中 or 已离职？<a href="{{link.host}}{{link.baoliao.index}}">吐槽一下</a>你的不开心吧!</p>
+    <p class="text-center info">正求职？搜一下求职公司的吐槽点! </p>
+    <form class="search-form" action="{{link.host}}{{link.search.index}}" method="get">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="请输入关键词搜索" name="wd">
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="submit">搜一下</button>
+        </span>
+      </div><!-- /input-group -->
+    </form>
+  </div>
+{{/block}}

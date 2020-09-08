@@ -1,0 +1,291 @@
+{{extend '../common/layout.art'}}
+
+{{block 'title'}}首页{{/block}}
+
+{{block 'head'}}
+<link href="{{link.static}}/admin/css/index.css" rel="stylesheet">
+{{/block}}
+
+{{block 'content'}}
+<div class="content-wrapper">
+	<div class="system">
+		<h2 class="name">系统概况</h2>
+		<div class="tab-container" id="js_tab_container_chart">
+			<div class="js_tab_content tab-wrapper on">
+				<div class="left">
+					<div class="title">本月管理员吐槽</div>
+					<div class="num blue">467<i class="unit">条</i></div>
+					<div class="info">上月：424条</div>
+					<div class="info">上升 +1.5%
+						<svg class="icon ico up" aria-hidden="true">
+							<use xlink:href="#icon-up"></use>
+						</svg>
+					</div>
+					<div class="title">本月用户吐槽</div>
+					<div class="num green">864<i class="unit">条</i></div>
+					<div class="info">上月：885</div>
+					<div class="info">下降 -2.5%
+						<svg class="icon ico down" aria-hidden="true">
+							<use xlink:href="#icon-down"></use>
+						</svg>
+					</div>
+				</div>
+				<div class="chart" id="js_chart_month"></div>
+			</div>
+			<div class="js_tab_content tab-wrapper">
+				<div class="left">
+					<div class="title">本季度管理员吐槽</div>
+					<div class="num blue">467<i class="unit">条</i></div>
+					<div class="info">上季度：424条</div>
+					<div class="info">上升 +1.5%
+						<svg class="icon ico up" aria-hidden="true">
+							<use xlink:href="#icon-up"></use>
+						</svg>
+					</div>
+					<div class="title">本季度用户吐槽</div>
+					<div class="num green">864<i class="unit">条</i></div>
+					<div class="info">上季度：885</div>
+					<div class="info">下降 -2.5%
+						<svg class="icon ico down" aria-hidden="true">
+							<use xlink:href="#icon-down"></use>
+						</svg>
+					</div>
+				</div>
+				<div class="chart" id="js_chart_quarter"></div>
+			</div>
+			<div class="js_tab_content tab-wrapper">
+				<div class="left">
+					<div class="title">本年度管理员吐槽</div>
+					<div class="num blue">467<i class="unit">条</i></div>
+					<div class="info">上年：424条</div>
+					<div class="info">上升 +1.5%
+						<svg class="icon ico up" aria-hidden="true">
+							<use xlink:href="#icon-up"></use>
+						</svg>
+					</div>
+					<div class="title">本年用户吐槽</div>
+					<div class="num green">864<i class="unit">条</i></div>
+					<div class="info">上年：885</div>
+					<div class="info">下降 -2.5%
+						<svg class="icon ico down" aria-hidden="true">
+							<use xlink:href="#icon-down"></use>
+						</svg>
+					</div>
+				</div>
+				<div class="chart" id="js_chart_year"></div>
+			</div>
+			<div class="tab-btn">
+				<a href="javascript:;" class="js_tab_btn btn-item on">月度</a>
+				<a href="javascript:;" class="js_tab_btn btn-item">季度</a>
+				<a href="javascript:;" class="js_tab_btn btn-item">年度</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="table-container">
+		<div class="table-item left js_tab_container">
+			<div class="tab-header">
+				<h2 class="name">待办事项 <i>(只显示最近未读10条数据)</i></h2>
+				<div class="tab-btn">
+					<a href="javascript:;" class="js_tab_btn btn-item on">最新吐槽</a>
+					<i class="space"></i>
+					<a href="javascript:;" class="js_tab_btn btn-item">最新评论</a>
+				</div>
+			</div>
+			<div class="js_tab_content tab-container on">
+				<table class="table">
+					<tr>
+						<th>公司名字</th>
+						<th>吐槽原因</th>
+						<th>详细</th>
+						<th class="address">公司地址</th>
+						<th class="address">吐槽人地址</th>
+						<th class="time">时间</th>
+						<th class="operate">操作</th>
+					</tr>
+					{{each newCompany item index}}
+					<tr>
+						<td><div class="item-name">{{item.name}}</div></td>
+						<td>{{item.reason}}</td>
+						<td>{{item.content}}</td>
+						<td class="address">{{item.address}}</td>
+						<td class="address">{{item.ipAddress}}</td>
+						<td class="time">{{item.createtime | timestamp | dateFormat 'yyyy-MM-dd hh:mm:ss'}}</td>
+						<td class="operate"><a href="javascript:;" class="link">查看</a><a href="javascript:;" class="link">删除</a></td>
+					</tr>
+					{{/each}}
+				</table>
+			</div>
+			<div class="js_tab_content tab-container">
+				<table class="table">
+					<tr>
+						<th>评论内容</th>
+						<th class="company">评论公司</th>
+						<th class="time">时间</th>
+						<th>评论人地址</th>
+						<th class="operate">操作</th>
+					</tr>
+					{{each newComment item index}}
+					<tr>
+						<td><div class="item-name">{{@item.content}}</div></td>
+						<td class="company">{{item.company}}</td>
+						<td class="time">{{item.createtime | timestamp | dateFormat 'yyyy-MM-dd hh:mm:ss'}}</td>
+						<td class="address">{{item.ipAddress}}</td>
+						<td class="operate"><a href="javascript:;" class="link">查看</a><a href="javascript:;" class="link">删除</a></td>
+					</tr>
+					{{/each}}
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+{{/block}}
+
+{{block 'script'}}
+<script src="{{link.CDN.echarts.js}}"></script>
+<script type="text/javascript">
+$(function() {
+	// tab切换
+	$('.js_tab_container').on('click', '.js_tab_btn', function() {
+		var $jsTabBtn = $(this).closest('.js_tab_container').find('.js_tab_btn');
+		var $jsTabContent = $(this).closest('.js_tab_container').find('.js_tab_content');
+		var index = $jsTabBtn.index(this);
+		$jsTabBtn.removeClass('on').eq(index).addClass('on');
+		$jsTabContent.removeClass('on').eq(index).addClass('on');
+	});
+
+	// 柱状图绘制参数参考百度echarts  http://echarts.baidu.com/option.html
+	var option = {
+		color: ['#86C2FC', '#74EBAE'],
+		tooltip: {
+			trigger: 'axis',
+			axisPointer: {
+				type: 'cross',
+				crossStyle: {
+					color: '#999'
+				}
+			}
+		},
+		grid: {
+			left: 40,
+			right: 40,
+			bottom: 40,
+			top: 50,
+		},
+		legend: {
+			textStyle: {
+				fontSize: 14,
+				color: '#4C5265'
+			},
+			data: [{
+				icon: 'path://M0 0 L0 0 L10 0 L10 10 L0 10 Z',
+				name: '管理员'
+			}, {
+				icon: 'path://M0 0 L0 0 L10 0 L10 10 L0 10 Z',
+				name: '用户'
+			}]
+		},
+		xAxis: [{
+			type: 'category',
+			data: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18'],
+			axisPointer: {
+				type: 'shadow'
+			},
+			axisLabel: {
+				color: '#B3B4B9'
+			},
+			axisTick: {
+				show: false
+			},
+			axisLine: {
+				lineStyle: {
+					color: '#dddddd',
+					width: 1
+				}
+			}
+		}],
+		yAxis: [{
+			type: 'value',
+			name: '吐槽数',
+			nameTextStyle: {
+				fontSize: 14,
+				color: '#4C5265'
+			},
+			min: 0,
+			max: 60,
+			interval: 10,
+			axisLabel: {
+				color: '#4C5265',
+				formatter: '{value}'
+			},
+			axisTick: {
+				show: false
+			},
+			axisLine: {
+				lineStyle: {
+					color: '#dddddd',
+					width: 1
+				}
+			},
+			splitLine: {
+				lineStyle: {
+					color: '#e9e9e9',
+					type: 'dashed',
+					width: 1
+				}
+			}
+		}],
+		series: [{
+			name: '管理员',
+			barWidth: 2,
+			barGap: 8,
+			type: 'bar',
+			data: [12, 42, 7, 27, 25.6, 6.7, 35.6, 42.2, 32.6, 20.0, 6.4, 3.3, 15, 21, 32, 18, 15, 10]
+		}, {
+			name: '用户',
+			barWidth: 2,
+			barGap: 8,
+			type: 'bar',
+			data: [30, 10, 14, 40, 28.7, 7.7, 15.6, 6.2, 48.7, 18.8, 6.0, 2.3, 10, 50, 32, 8, 16, 24]
+		}]
+	};
+	function drawLineBar (id, option) {
+		var dom = document.getElementById(id);
+		var chart = echarts.init(dom);
+		chart.setOption(option, true);
+		return chart;
+	}
+
+	// 绘制月度图表
+	var monthChart = drawLineBar('js_chart_month', option);
+	// 绘制季度图表
+	var quarterChart = drawLineBar('js_chart_quarter', option);
+	// 绘制年度图表
+	var yearChart = drawLineBar('js_chart_year', option);
+
+	// 用于tab切换时候，重绘图表
+	var lineBarCharts = [monthChart, quarterChart, yearChart];
+	// 柱状图区域tab切换
+	var $jsTabContainerChart = $('#js_tab_container_chart').on('click', '.js_tab_btn', function() {
+		var $jsTabBtn = $jsTabContainerChart.find('.js_tab_btn');
+		var $jsTabContent = $jsTabContainerChart.find('.js_tab_content');
+		var index = $(this).index();
+		$jsTabBtn.removeClass('on').eq(index).addClass('on');
+		$jsTabContent.removeClass('on').eq(index).addClass('on');
+		// 让图表渲染一次之后就不再重绘
+		if (lineBarCharts[index].isRenderChart == true) {
+			return;
+		}
+		lineBarCharts[index].resize();
+		lineBarCharts[index].isRenderChart = true;
+	});
+	// 窗口大小改变时候重绘
+	$(window).on('resize', function() {
+		for (var i = 0; i < lineBarCharts.length; i++) {
+			lineBarCharts[i].resize();
+			lineBarCharts[i].isRenderChart = false;
+		}
+	});
+});
+</script>
+{{/block}}

@@ -1,0 +1,41 @@
+<!--baoliao.art-->
+{{extend '../common/layout.art'}}
+
+{{block 'title'}}{{wd}}_黑榜搜索{{/block}}
+
+{{block 'head'}}
+  <link rel="stylesheet" href="{{link.static}}/css/search.css">
+{{/block}}
+
+
+{{block 'content'}}
+  <div class="page-header">
+    <h1 class="page-title">关于 <i>{{wd}}</i> 的吐槽</h1>
+  </div>
+  {{if list.length > 0}}
+  <div class="page-container">
+    <ul class="list list-unstyled">
+      {{each list item index}}
+      <li class="item">
+        <a class="link" href="{{link.host}}{{link.details.index}}/{{item.uuid}}" target="_blank">
+          <h2 class="title">{{item.name}}</h2>
+        </a>
+        <div class="info">原因：{{item.reason}}</div>
+        <div class="info">坐标：{{item.address}}</div>
+        {{if $imports.filterHTMLTag(item.content)}}
+        <div class="info">详细：{{@item.content | filterHTMLTag | ell 200}}</div>
+        {{/if}}
+        <div class="info">时间：{{item.createtime | dateFormatBeforeN}}</div>
+      </li>
+      {{/each}}
+    </ul>
+    <nav class="paging" aria-label="Page navigation">
+      <ul class="pagination">
+        {{@total | pagination pageNo pageSize link.host+link.new.index}}
+      </ul>
+    </nav>
+  </div>
+  {{else}}
+  <div class="empty">暂无数据，去 <a href="{{link.host}}{{link.baoliao.index}}?name={{wd}}">吐槽一下`{{wd}}`</a> </div>
+  {{/if}}
+{{/block}}

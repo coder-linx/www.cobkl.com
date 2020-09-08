@@ -1,2 +1,3 @@
-# www.cobkl.com
-www.cobkl.com 开源仓库
+# 说明
+
+由于备案相关问题，即日起 www.cobkl.com 停止运营，现将代码及数据开源。
